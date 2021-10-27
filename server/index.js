@@ -6,6 +6,20 @@ const app = express();
 const server = require('http').createServer(app)
 app.use(express.json());
 
+const io = require('socket.io')(server, {
+  cors: {
+      origin: process.env.BASE_URL,
+      methods: ["GET", "POST"],
+      transports: ['websocket', 'polling'],
+      credentials: true
+  },
+  allowEIO3: true
+})
+
+io.on('connection', socket => {
+  console.log('IO Connected')
+})
+
 // Подключаем Mongoose и делаем коннект к базе данных.
 // Прописываем стандартные настройки Mongoose.
 const mongoose = require("mongoose");
