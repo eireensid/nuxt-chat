@@ -1,9 +1,9 @@
 <template>
-  <main>
-    <h1>Контент главной страницы1</h1>
-
-    <p>Базовый шаблон для работы Nuxt в качестве middleware для Express.</p>
-  </main>
+  <v-layout column justify-center align-center>
+    <v-flex xs12 sm8 md6>
+      <v-btn @click="message">NEW MESSAGE</v-btn>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -23,10 +23,17 @@ export default {
     };
   },
 
-  mounted() {
-    this.socket = this.$nuxtSocket({
-      channel: '/index'
-    }, console.log('nuxt s'))
+  sockets: {
+    connect() {
+      console.log('socket connected')
+    }
+  },
+  methods: {
+    message() {
+      this.$socket.client.emit("createMessage", {
+        text: "FROM CLIENT"
+      });
+    }
   }
 };
 </script>

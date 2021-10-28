@@ -41,16 +41,10 @@ module.exports = {
   //Подключаем модуль Axios для выполнения запросов к бэкенду.
   modules: [
     "@nuxtjs/axios",
-    'nuxt-socket-io'
+    // 'nuxt-socket-io'
   ],
 
-  io: {
-    // module options
-    sockets: [{
-      name: 'main',
-      url: process.env.BASE_URL
-    }]
-  },
+  plugins: ['@/plugins/vuetify', { src: '@/plugins/socket', ssr: false }],
 
   //Подключаем общий файл со стилями.
   css: ["@/assets/css/main.css"],

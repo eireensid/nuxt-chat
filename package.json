@@ -16,9 +16,10 @@
     "express": "^4.17.1",
     "mongoose": "^5.13.3",
     "nuxt": "^2.15.7",
-    "nuxt-socket-io": "^1.1.24",
     "socket.io": "^4.3.1",
-    "vue-socket.io": "^3.0.10"
+    "socket.io-client": "^4.3.2",
+    "vue-socket.io-extended": "^4.2.0",
+    "vuetify": "^2.5.10"
   },
   "devDependencies": {
     "cross-env": "^5.2.1",
