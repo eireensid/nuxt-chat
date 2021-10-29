@@ -16,15 +16,22 @@ const io = require('socket.io')(server, {
   allowEIO3: true
 })
 
-io.on('connection', socket => {
-  console.log('IO Connected')
+const m = (name, text, id) => ({name, text, id})
 
-  socket.on('createMessage', data => {
-    setTimeout(() => {
-      socket.emit('newMessage', {
-        text: data.text + ' SERVER'
-      })
-    }, 500)
+io.on('connection', socket => {
+
+  socket.on('userJoined', (data, cb) => {
+    if (!data.name || !data.room) {
+      return cb('Данные некорректны')
+    }
+
+    socket.join(data.room)
+    cb({userId: socket.id})
+    socket.emit('newMessage', m('admin', `Добро пожаловать ${data.name}`))
+    // for other users in the room
+    socket.broadcast
+      .to(data.room)
+      .emit('newMessage', m('admin', `Пользователь ${data.name} зашел`))
   })
 })
 

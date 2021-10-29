@@ -10,11 +10,14 @@ export const mutations = {
   clearData(state) {
     state.user = {}
     state.messages = []
+  },
+  addMessage(state, message) {
+    state.messages.push(message)
   }
 }
 
 export const actions = {
-  socket_newMessage(ctx, data) {
-    console.log('Message received', data)
+  socket_newMessage({ commit }, data) {
+    commit("addMessage", data)
   }
 }

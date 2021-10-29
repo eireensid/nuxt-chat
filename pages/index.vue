@@ -78,11 +78,6 @@ export default {
     }
   },
   methods: {
-    // message() {
-    //   this.$socket.client.emit("createMessage", {
-    //     text: "FROM CLIENT"
-    //   });
-    // },
     ...mapMutations(['setUser']),
     submit() {
       if (this.$refs.form.validate()) {
@@ -91,8 +86,16 @@ export default {
           room: this.room
         }
 
-        this.setUser(user)
-        this.$router.push('/chat')
+        // 3 parament - callback, will be called when server receives the given info
+        this.$socket.client.emit('userJoined', user, data => {
+          if (typeof data === 'string') {
+            console.error(data)
+          } else {
+            user.id = data.userId
+            this.setUser(user)
+            this.$router.push('/chat')
+          }
+        })
       }
     }
   }
