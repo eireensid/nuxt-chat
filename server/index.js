@@ -28,10 +28,19 @@ io.on('connection', socket => {
     socket.join(data.room)
     cb({userId: socket.id})
     socket.emit('newMessage', m('admin', `Добро пожаловать ${data.name}`))
+    socket.emit('newMessage', m('TEST', `Добро пожаловать`))
     // for other users in the room
     socket.broadcast
       .to(data.room)
       .emit('newMessage', m('admin', `Пользователь ${data.name} зашел`))
+  })
+
+  socket.on('createMessage', data => {
+    setTimeout(() => {
+      socket.emit('newMessage', {
+        text: data.text + ' SERVER'
+      })
+    }, 500)
   })
 })
 

@@ -38,6 +38,8 @@ module.exports = {
   // Отключаем предварительную загрузку контента, на который есть ссылки на текущей страницы.
   router: { prefetchLinks: false },
 
+  buildModules: ['stylus', 'stylus-loader@3'],
+
   //Подключаем модуль Axios для выполнения запросов к бэкенду.
   modules: [
     "@nuxtjs/axios",
