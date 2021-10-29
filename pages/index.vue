@@ -1,43 +1,41 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8>
-      <v-card min-width="400">
-        <v-card-title>
-          <h2>Nuxt чат</h2>
-        </v-card-title>
-        <v-card-text>
-          <v-form
-            ref="form"
-            v-model="valid"
-            lazy-validation
+  <v-layout column justify-center align-center full-height>
+    <v-card min-width="400">
+      <v-card-title>
+        <h2>Nuxt чат</h2>
+      </v-card-title>
+      <v-card-text>
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
+          <v-text-field
+            v-model="name"
+            :counter="16"
+            :rules="nameRules"
+            label="Ваше имя"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="room"
+            :rules="roomRules"
+            label="Введите комнату"
+            required
+          ></v-text-field>
+
+          <v-btn
+            :disabled="!valid"
+            color="primary"
+            class="mr-4"
+            @click="submit"
           >
-            <v-text-field
-              v-model="name"
-              :counter="16"
-              :rules="nameRules"
-              label="Ваше имя"
-              required
-            ></v-text-field>
-
-            <v-text-field
-              v-model="room"
-              :rules="roomRules"
-              label="Введите комнату"
-              required
-            ></v-text-field>
-
-            <v-btn
-              :disabled="!valid"
-              color="primary"
-              class="mr-4"
-              @click="submit"
-            >
-              Войти
-            </v-btn>
-          </v-form>
-        </v-card-text>
-      </v-card>
-    </v-flex>
+            Войти
+          </v-btn>
+        </v-form>
+      </v-card-text>
+    </v-card>
   </v-layout>
 </template>
 
@@ -100,3 +98,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.full-height {
+  height: 100vh;
+}
+</style>

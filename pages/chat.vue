@@ -1,5 +1,13 @@
 <template>
-  <h1>CHAT PAGE {{user.name}}</h1>
+  <v-container>
+    <div>
+      <ul>
+        <li v-for="m in messages" :key="m.text">
+          {{m.text}}
+        </li>
+      </ul>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -14,6 +22,6 @@ export default {
 
   middleware: ['chat'],
 
-  computed: mapState(['user'])
+  computed: mapState(['user', 'messages'])
 }
 </script>
