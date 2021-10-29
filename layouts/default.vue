@@ -23,7 +23,7 @@
             </v-list-item-content>
 
             <v-list-item-icon>
-              <v-icon :color="u.id === 2 ? 'deep-purple accent-4' : 'grey'">
+              <v-icon :color="u.id === user.id ? 'deep-purple accent-4' : 'grey'">
                 mdi-message-outline
               </v-icon>
             </v-list-item-icon>
@@ -62,20 +62,18 @@ export default {
   },
 
   data: () => ({
-    drawer: true,
-    users: [
-      {id: 1, name: "user 1"},
-      {id: 2, name: "user 2"}
-    ]
+    drawer: true
   }),
 
-  computed: mapState(['user']),
+  computed: mapState(['user', 'users']),
 
   methods: {
     ...mapMutations(['clearData']),
     exit() {
-      this.$router.push('/?message=leftChat')
-      this.clearData()
+      this.$socket.client.emit('userLeft', this.user.id, () => {
+        this.$router.push('/?message=leftChat')
+        this.clearData()
+      })
     }
   }
 

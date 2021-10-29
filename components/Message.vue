@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="name === 'admin'" class="system">
-      <p class="text-xs-center">{{text}}</p>
+      <p class="text-center">{{text}}</p>
       <hr>
     </div>
     <div v-else class="wrap">

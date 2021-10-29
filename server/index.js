@@ -35,6 +35,9 @@ io.on('connection', socket => {
     })
 
     cb({userId: socket.id})
+
+    io.to(data.room).emit('updateUsers', users.getByRoom(data.room))
+
     socket.emit('newMessage', m('admin', `Добро пожаловать ${data.name}`))
     // for other users in the room
     socket.broadcast
@@ -54,6 +57,31 @@ io.on('connection', socket => {
     // empty text on fromt
     cb()
   })
+
+  socket.on('userLeft', (id, cb) => {
+    const user = users.remove(id)
+    if (user) {
+      io.to(user.room).emit('updateUsers', users.getByRoom(user.room))
+      io.to(user.room).emit(
+        'newMessage',
+        m('admin', `Пользователь ${user.name} вышел`)
+      )
+    }
+    cb()
+  })
+
+  // user closed window
+  socket.on('disconnect', () => {
+    const user = users.remove(socket.id)
+    if (user) {
+      io.to(user.room).emit('updateUsers', users.getByRoom(user.room))
+      io.to(user.room).emit(
+        'newMessage',
+        m('admin', `Пользователь ${user.name} вышел`)
+      )
+    }
+  })
+
 })
 
 // Подключаем Mongoose и делаем коннект к базе данных.
