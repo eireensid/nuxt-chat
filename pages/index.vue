@@ -1,6 +1,25 @@
 <template>
   <v-layout column justify-center align-center full-height>
     <v-card min-width="400">
+      <v-snackbar
+        v-model="snackbar"
+        :timeout="6000"
+        top
+      >
+        {{ message }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="pink"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+          >
+            Закрыть
+          </v-btn>
+        </template>
+      </v-snackbar>
+
       <v-card-title>
         <h2>Nuxt чат</h2>
       </v-card-title>
@@ -69,7 +88,9 @@ export default {
     room: '',
     roomRules: [
       v => !!v || 'Введите комнату'
-    ]
+    ],
+    snackbar: false,
+    message: ''
   }),
 
   sockets: {
@@ -77,6 +98,19 @@ export default {
       console.log('socket connected')
     }
   },
+
+  mounted() {
+    const { message } = this.$route.query
+    if (message === 'noUser') {
+      this.message = 'Введите данные'
+    } else if (message === 'leftChat') {
+      this.message = 'Вы вышли из чата'
+    }
+
+    // to boolean type
+    this.snackbar = !!this.message
+  },
+
   methods: {
     ...mapMutations(['setUser']),
     submit() {

@@ -1,8 +1,8 @@
 <template>
   <div class="c-wrap">
-    <div class="c-chat">
+    <div class="c-chat" ref="block">
       <Message
-        v-for="m in messages" :key="m.text"
+        v-for="(m, i) in messages" :key="i"
         :name="m.name"
         :text="m.text"
         :owner="m.id === user.id"
@@ -26,7 +26,15 @@ export default {
 
   middleware: ['chat'],
 
-  computed: mapState(['user', 'messages'])
+  computed: mapState(['user', 'messages']),
+
+  watch: {
+    messages() {
+      this.$nextTick(() => {
+        this.$refs.block.scrollTop = this.$refs.block.scrollHeight
+      })
+    }
+  }
 }
 </script>
 

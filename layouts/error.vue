@@ -1,14 +1,15 @@
 <template>
-  <main>
-    <h1>Ошибка с кодом {{ error.statusCode }}</h1>
-    <nuxt-link to="/">Перейти на главную страницу.</nuxt-link>
-  </main>
+  <v-app app>
+    <v-main>
+      <v-container fluid>
+        <h2>Страница не найдена</h2>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 export default {
-  // Шаблон страницы с ошибкой.
-  props: ["error"],
-  layout: "default",
+  layout: 'empty'
 };
 </script>
